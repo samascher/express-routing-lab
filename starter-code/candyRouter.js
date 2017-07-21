@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 router = express.Router();
-const candies;
+var candies;
+
+router.use('/candies', require('./candies'));
 
 //What would need to go into candies
 //in order to pass our first test?
