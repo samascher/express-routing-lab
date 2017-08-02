@@ -1,46 +1,56 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-router = express.Router();
-var candies;
+const router = express.Router();
 
-router.use('/candies', require('./candies'));
+var candies = [
+{id: 1, name: "Chewing Gum", color: "Red"},
+{id: 2, name: "Pez", color: "Green"},
+{id: 3, name: "Marshmallow", color: "Pink"},
+{id: 4, name: "Candy Stick", color: "Blue"}
+];
 
 //What would need to go into candies
 //in order to pass our first test?
 
-//INDEX
 router.get('/', function(req,res) {
-	res.send('You made a GET request to the / path AKA the INDEX motherfucker');
+	res.json(candies);
+	// What would go here? 
+	// Hint: we want all candies in JSON format
 });
 
-//NEW
-router.get('/new', function(req,res) {
-	res.send('You made a GET request to the /new path...aka NEW');
+// Fill out the rest of the routes here
+
+router.get('/:id', function(req,res) {
+	//show
+	res.send(candies[req.params.id - 1 ]);
 });
 
-//EDIT
+router.get('/new', function(req, res) {
+	//new
+});
+
+router.post('/', function(req,res) {
+	//create
+	candies.push(req.body);
+	res.send(req.body);
+});
+
 router.get('/:id/edit', function(req,res) {
-	res.send('You made a GET resquest to the /:id/edit path aka the EDIT');
+	//edit
 });
 
-//SHOW
-router.get('/:id', function(req, res) {
-	res.send('You made a GET request to the /:id path aka SHOW');
+router.put('/:id', function(req,res) {
+	//updates
+	candies[req.params.id - 1 ] = req.body;
+	res.send(req.body);
+
 });
 
-//CREATE
-router.post('/', function(req, rest){
-	res.send('You made a POST reuqest to the / path aka CREATE');
-});
+router.delete('/:id', function(req,res) {
+	//delete
+	candies.splice(req.params.id-1,1);
+	res.send({"message":"deleted"});
 
-//UPDATE
-router.put('/:id', function(req, res){
-	res.send('You made teh PUT request in the /:id path ... aka UPDATE motherfucker!!');
-});
-
-//DESTROY
-router.delete('/:id', function(req, res) {
-	res.send('You made a delete request to the /:id path AKA destroy!!!!');
 });
 
 module.exports = router;
